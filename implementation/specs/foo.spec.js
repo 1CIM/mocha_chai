@@ -1,16 +1,16 @@
 const Foo = require('../src/foo');
 const chai = require('chai');
-const sinon = require('sinon')
+const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
-const expect = chai.expect
-chai.use(sinonChai)
+const expect = chai.expect;
+chai.use(sinonChai);
 
 describe('Foo', () => {
-  const subject = new Foo('Kim');
-  const barSpy = sinon.spy(subject, 'getName')
+  const subject = new Foo('baz');
+  const getNameSpy = sinon.spy(subject, 'getName');
   // x in front of it as bellow makes it so that it block don't run n the test
-  xit('is expected to return Kim', () => {
-    expect(subject.bar).to.equal('Kim');
+  it('is expected to return baz', () => {
+    expect(subject.bar).to.equal('baz');
   });
 
   describe('.greetMe()', () => {
@@ -20,12 +20,14 @@ describe('Foo', () => {
 
     // it.only makes only that test run
     it('is expected to respond with "Hello Me"', () => {
-      expect(subject.greetMe()).to.equal('Hello Kim');
+      expect(subject.greetMe()).to.equal('Hello Svampen');
     });
 
     it('is expected to invoke #bar', () => {
-      subject.greetMe()
-      expect(barSpy).to.have.been.called
+      subject.greetMe();
+      expect(getNameSpy)
+        .to.have.been.calledWith('Svampen')
+        .and.returned('Svampen');
     });
   });
 });
